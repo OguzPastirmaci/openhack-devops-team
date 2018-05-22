@@ -21,8 +21,8 @@
         "istanbul": "~0.4.3",
         "is-my-json-valid": "^2.13.1",
         "js-yaml": "^3.2.6",
-        "supertest": "^1.2.0",
-        "swagger-parser": "^3.4.1"
+        "supertest": "^3.1.0",
+        "swagger-parser": "^4.1.0"
     },
     "scripts": {
         "test": "tape 'tests/**/*.js'",
