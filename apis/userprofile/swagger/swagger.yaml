@@ -21,11 +21,11 @@ paths:
         200:
           description: "Service is healthy"
           schema:
-            $ref: "#/definitions/Healthcheck"
+            $ref: "Healthcheck"
         default:
           description: "An error occurred"
           schema:
-            $ref: "#/definitions/error_response_default"
+            $ref: "error_response_default"
   /user:
     get:
       description: "List all user profiles"
@@ -37,11 +37,11 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Profile"
+              $ref: "Profile"
         default:
           description: "An error occurred"
           schema:
-            $ref: "#/definitions/inline_response_default"
+            $ref: "inline_response_default"
       x-swagger-router-controller: "user"
   /user/{userID}:
     parameters:
@@ -60,11 +60,11 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Profile"
+              $ref: "Profile"
         default:
           description: "An error occurred"
           schema:
-            $ref: "#/definitions/inline_response_default"
+            $ref: "inline_response_default"
       x-swagger-router-controller: "user"
     post:
       description: "Declares and creates a new profile"
@@ -75,19 +75,19 @@ paths:
         description: "Details of the profile"
         required: true
         schema:
-          $ref: "#/definitions/Profile"
+          $ref: "Profile"
       responses:
         201:
           description: "Creation successful"
           schema:
-            $ref: "#/definitions/Profile"
+            $ref: "Profile"
           headers:
             location:
               type: "string"
         default:
           description: "An error occurred"
           schema:
-            $ref: "#/definitions/inline_response_default"
+            $ref: "inline_response_default"
       x-swagger-router-controller: "user"
     patch:
       description: "Update User"
@@ -96,13 +96,13 @@ paths:
         200:
           description: "User Updated"
           schema:
-            $ref: "#/definitions/Profile"
+            $ref: "Profile"
         404:
           description: "User profile not found"
         default:
           description: "Unknown Error"
           schema:
-            $ref: "#/definitions/error_response_default"
+            $ref: "error_response_default"
     delete:
       description: "Delete User By ID"
       operationId: "userDELETE"
@@ -114,7 +114,7 @@ paths:
         default:
           description: "Unknown Error"
           schema:
-            $ref: "#/definitions/error_response_default"
+            $ref: "error_response_default"
 definitions:
   Healthcheck:
     type: "object"
