@@ -1,9 +1,8 @@
 podTemplate(
     label: 'apici',
     containers: [
-        containerTemplate(name: 'gobuildci', image: 'golang:1.10.1', ttyEnabled: true, command: 'cat'),
         containerTemplate(
-          name: 'golang',
+          name: 'gobuildci',
           image: 'golang:1.10.1',
           ttyEnabled: true,
           command: 'cat'
