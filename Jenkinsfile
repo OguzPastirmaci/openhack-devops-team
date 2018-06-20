@@ -20,9 +20,7 @@ podTemplate(
             container('golang') {
                 stage('Build and Test Trips API') {
                     echo "Building Trips API"
-                    sh """
                     go get -t ./apis/trips
-                    """
                 }
             }
         }
