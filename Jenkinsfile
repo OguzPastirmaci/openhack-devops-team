@@ -6,7 +6,13 @@ podTemplate(
           image: 'golang:1.10.1',
           ttyEnabled: true,
           command: 'cat'
-        )
+        ),
+        containerTemplate(
+          name: 'busybox',
+          image: 'busybox:latest',
+          ttyEnabled: true,
+          command: 'cat'
+        ),
     ],
     envVars: [
         envVar(key: 'TEMP', value: 'changemelater')
@@ -16,7 +22,7 @@ podTemplate(
     node('apici') {
         stage('API-Trips-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
-            container('gobuildci') {
+            container('busybox') {
                 stage('Build and Test Trips API') {
                     sh """
                     echo
