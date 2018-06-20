@@ -11,10 +11,7 @@ podTemplate(
     ],
     envVars: [
         envVar(key: 'TEMP', value: 'changemelater')
-    ],
-    volumes: [
-        secretVolume(secretName: 'sshkey', mountPath: '/home/jenkins/.ssh')
-        ]
+    ]
     ) {
 
     node('apici') {
