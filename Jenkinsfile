@@ -8,8 +8,8 @@ podTemplate(
           command: 'cat'
         ),
         containerTemplate(
-          name: 'busybox',
-          image: 'busybox:latest',
+          name: 'nodealpine',
+          image: 'node:8-alpine',
           ttyEnabled: true,
           command: 'cat'
         ),
@@ -22,14 +22,36 @@ podTemplate(
     node('apici') {
         stage('API-Trips-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
-            container('busybox') {
+            container('gobuildci') {
                 stage('Build and Test Trips API') {
                     sh """
-                    echo
+                    curl https://glide.sh/get | sh
+                    glide install
+                    go test ./apis/test
+                    """
+                }
+                stage('Docker Build Trips API') {
+                    sh """
+                    docker build ./apis/trips -t trips
                     """
                 }
             }
         }
-
+        stage('API-User-CI') {
+            git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
+            container('nodealpine') {
+                stage('Build and Test User API') {
+                    sh """
+                    npm install apis/userprofile
+                    npm run test --prefix apis/userprofile
+                    """
+                }
+                stage('Docker Build User API') {
+                    sh """
+                    docker build ./apis/userprofile -t user
+                    """
+                }
+            }
+        }
     }
 }
