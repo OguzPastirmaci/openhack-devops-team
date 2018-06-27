@@ -14,11 +14,6 @@ podTemplate(
           command: 'cat'
         ),
     ],
-    envVars: [
-        envVar(key: 'TEMPTRIPS', value: 'changemelater')
-    ]
-)
-podTemplate(
     label: 'apiuser',
     containers: [
         containerTemplate(
@@ -33,9 +28,6 @@ podTemplate(
           ttyEnabled: true,
           command: 'cat'
         ),
-    ],
-    envVars: [
-        envVar(key: 'TEMPUSER', value: 'changemelater')
     ]
 ) {
     node('apitrips') {
