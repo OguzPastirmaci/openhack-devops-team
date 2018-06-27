@@ -31,7 +31,7 @@ podTemplate(
                     ls
                     curl https://glide.sh/get | sh
                     glide install
-                    go test ./test
+                    #go test ./test
                     """
                 }
                 stage('Docker Build Trips API') {
