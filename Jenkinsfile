@@ -24,16 +24,14 @@ podTemplate(
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
             container('gobuildci') {
                 stage('Build and Test Trips API') {
-                    steps {
-                        sh """
-                        cp -R . /go/src/github.com/Azure-Samples/openhack-devops-team
-                        cd /go/src/github.com/Azure-Samples/openhack-devops-team/apis/trips
-                        ls
-                        curl https://glide.sh/get | sh
-                        glide install
-                        go test ./test
-                        """
-                    }
+                    sh """
+                    cp -R . /go/src/github.com/Azure-Samples/openhack-devops-team
+                    cd /go/src/github.com/Azure-Samples/openhack-devops-team/apis/trips
+                    ls
+                    curl https://glide.sh/get | sh
+                    glide install
+                    go test ./test
+                    """
                 }
                 stage('Docker Build Trips API') {
                     sh """
