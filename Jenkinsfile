@@ -25,8 +25,9 @@ podTemplate(
             container('gobuildci') {
                 stage('Build and Test Trips API') {
                     sh """
+                    cd apis/trips
                     curl https://glide.sh/get | sh
-                    glide install
+                    glide install 
                     go test ./apis/test
                     """
                 }
@@ -37,6 +38,7 @@ podTemplate(
                 }
             }
         }
+
         stage('API-User-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
             container('nodealpine') {
@@ -53,5 +55,6 @@ podTemplate(
                 }
             }
         }
+
     }
 }
