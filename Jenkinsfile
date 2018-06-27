@@ -17,7 +17,7 @@ podTemplate(
     envVars: [
         envVar(key: 'TEMPTRIPS', value: 'changemelater')
     ]
-),
+)
 podTemplate(
     label: 'apiuser',
     containers: [
