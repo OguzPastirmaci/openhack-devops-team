@@ -40,6 +40,8 @@ podTemplate(
                     #go test ./test
                     """
                 }
+            }
+            container('docker'){
                 stage('Docker Build Trips API') {
                     sh """
                     docker build ./apis/trips -t trips
@@ -47,6 +49,8 @@ podTemplate(
                 }
             }
         }
+    }
+    node('apiuser'){
         stage('API-User-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
             container('nodealpine') {
@@ -56,6 +60,8 @@ podTemplate(
                     npm run test --prefix apis/userprofile
                     """
                 }
+            }
+            container('docker'){
                 stage('Docker Build User API') {
                     sh """
                     docker build ./apis/userprofile -t user
