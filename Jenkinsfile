@@ -2,27 +2,10 @@ podTemplate(
     label: 'apitrips',
     containers: [
         containerTemplate(name: 'gobuildci', image: 'golang:1.10.1', ttyEnabled: true, command: 'cat'),
-        containerTemplate( name: 'nodealpine', image: 'node:8-alpine', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
-    ],
-    volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
     ],
     envVars: [
         envVar(key: 'TEMPTRIPS', value: 'changemelater')
-    ]
-) {
-podTemplate(
-    label: 'apiuser',
-    containers: [
-        containerTemplate( name: 'nodealpine', image: 'node:8-alpine', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
-    ],
-    volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-    ],
-    envVars: [
-        envVar(key: 'TEMPUSER', value: 'changemelater')
     ]
 ) {
     node('apitrips') {
@@ -50,6 +33,19 @@ podTemplate(
             }
         }
     }
+podTemplate(
+    label: 'apiuser',
+    containers: [
+        containerTemplate( name: 'nodealpine', image: 'node:8-alpine', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
+    ],
+    volumes: [
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
+    ],
+    envVars: [
+        envVar(key: 'TEMPUSER', value: 'changemelater')
+    ]
+) {
     node('apiuser'){
         stage('API-User-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
