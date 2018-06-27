@@ -1,5 +1,5 @@
 podTemplate(
-    label: 'apici',
+    label: 'apitrips',
     containers: [
         containerTemplate(
           name: 'gobuildci',
@@ -8,18 +8,37 @@ podTemplate(
           command: 'cat'
         ),
         containerTemplate(
-          name: 'nodealpine',
-          image: 'node:8-alpine',
+          name: 'docker',
+          image: 'docker:18-dind',
           ttyEnabled: true,
           command: 'cat'
         ),
     ],
     envVars: [
-        envVar(key: 'TEMP', value: 'changemelater')
+        envVar(key: 'TEMPTRIPS', value: 'changemelater')
     ]
-    ) {
-
-    node('apici') {
+),
+podTemplate(
+    label: 'apiuser',
+    containers: [
+        containerTemplate(
+          name: 'nodealpine',
+          image: 'node:8-alpine',
+          ttyEnabled: true,
+          command: 'cat'
+        ),
+        containerTemplate(
+          name: 'docker',
+          image: 'docker:18-dind',
+          ttyEnabled: true,
+          command: 'cat'
+        ),
+    ],
+    envVars: [
+        envVar(key: 'TEMPUSER', value: 'changemelater')
+    ]
+) {
+    node('apitrips') {
         stage('API-Trips-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
             container('gobuildci') {
@@ -41,7 +60,8 @@ podTemplate(
                 }
             }
         }
-
+    }
+    node('apiuser') {
         stage('API-User-CI') {
             git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
             container('nodealpine') {
