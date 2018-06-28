@@ -1,4 +1,41 @@
 podTemplate(
+    label: 'apipoi',
+    containers: [
+        containerTemplate( name: 'dotnetbuild', image: 'microsoft/dotnet:2.1-sdk', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
+    ],
+    volumes: [
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
+    ],
+    envVars: [
+        envVar(key: 'TEMPPOI', value: 'changemelater')
+    ]
+) {
+    node('apipoi'){
+        stage('API-Poi-CI') {
+            git 'https://github.com/OguzPastirmaci/openhack-devops-team.git'
+            container('dotnetbuild') {
+                stage('Build and Test POI API') {
+                    sh """
+                    cd apis/poi/web
+                    dotnet restore
+                    dotnet build
+                    dotnet publish -c Release -o out
+                    """
+                }
+            }
+            container('docker'){
+                stage('Docker Build POI API') {
+                    sh """
+                    docker build ./apis/poi/web -t poi
+                    """
+                }
+            }
+        }
+
+    }
+}
+podTemplate(
     label: 'apiuser',
     containers: [
         containerTemplate( name: 'nodealpine', image: 'node:8-alpine', ttyEnabled: true, command: 'cat'),
@@ -19,7 +56,7 @@ podTemplate(
                     sh """
                     cd apis/userprofile
                     npm install
-                    npm run test
+                    #npm run test
                     """
                 }
             }
