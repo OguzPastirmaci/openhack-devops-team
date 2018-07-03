@@ -100,7 +100,7 @@ podTemplate(
             container('docker'){
                 stage('Docker Build Trips API') {
                     sh """
-                    #docker build ./apis/trips -t trips
+                    docker build ./apis/trips -t trips
                     """
                 }
             }
