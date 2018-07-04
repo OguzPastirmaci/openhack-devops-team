@@ -4,9 +4,6 @@ podTemplate(
         containerTemplate( name: 'dotnetbuild', image: 'microsoft/dotnet:2.1-sdk', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
     ],
-    volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-    ],
     envVars: [
         envVar(key: 'TEMPPOI', value: 'changemelater')
     ]
@@ -27,7 +24,7 @@ podTemplate(
             container('docker'){
                 stage('Docker Build POI API') {
                     sh """
-                    #docker build ./apis/poi/web -t poi
+                    docker build ./apis/poi/web -t poi
                     """
                 }
             }
@@ -40,9 +37,6 @@ podTemplate(
     containers: [
         containerTemplate( name: 'nodealpine', image: 'node:8-alpine', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
-    ],
-    volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
     ],
     envVars: [
         envVar(key: 'TEMPUSER', value: 'changemelater')
@@ -93,7 +87,7 @@ podTemplate(
                     ls
                     curl https://glide.sh/get | sh
                     glide install
-                    #go test ./test
+                    go test ./test
                     """
                 }
             }
