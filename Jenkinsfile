@@ -30,7 +30,7 @@ podTemplate(
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-                    az acr build --registry devopsoh336sub3acr -f ./Dockerfile 
+                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apiuser .
                     """
                     }
                 }
@@ -61,11 +61,17 @@ podTemplate(
                     """
                 }
             }
-            container('docker'){
+            container('az'){
                 stage('Docker Build User API') {
                     sh """
                     docker build ./apis/userprofile -t user
                     """
+                    withCredentials([azureServicePrincipal('otaprdspn')]) {
+                    sh """
+                    az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apiuser .
+                    """
+                    }                    
                 }
             }
         }
@@ -98,11 +104,17 @@ podTemplate(
                     """
                 }
             }
-            container('docker'){
+            container('az'){
                 stage('Docker Build Trips API') {
                     sh """
-                    docker build ./apis/trips -t trips
+                    #docker build ./apis/trips -t trips
                     """
+                    withCredentials([azureServicePrincipal('otaprdspn')]) {
+                    sh """
+                    az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apitrips .
+                    """
+                    }                    
                 }
             }
         }
