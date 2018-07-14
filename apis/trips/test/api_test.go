@@ -4,9 +4,8 @@ import (
 	"bytes"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
-
-	"github.com/Azure-Samples/openhack-devops-team/apis/trips/tripsgo"
 
 	tripSvc "github.com/Azure-Samples/openhack-devops-team/apis/trips/tripsgo"
 	"github.com/gorilla/mux"
@@ -37,11 +36,12 @@ func testAPI(router *mux.Router, method, URL, body string) *httptest.ResponseRec
 }
 
 func runAPITests(t *testing.T, router *mux.Router, tests []apiTestCase) {
-	for i := 0; i < len(tests); i += 1 {
+	for i := 0; i < len(tests); i++ {
 		res := testAPI(router, tests[i].method, tests[i].url, tests[i].body)
 		tests[i].actualResponse = res.Body.String()
-		tripsgo.LogToConsole(tests[i].actualResponse)
+		tripSvc.Debug.Println(tests[i].actualResponse)
 		assert.Equal(t, tests[i].status, res.Code, tests[i].tag)
+		tripSvc.Info.Println(tests[i].tag + "- Response Code:" + strconv.Itoa(res.Code))
 		if tests[i].expectedResponse != "" {
 			assert.JSONEq(t, tests[i].expectedResponse, res.Body.String(), tests[i].tag)
 		}
