@@ -2,7 +2,6 @@ podTemplate(
     label: 'apipoi',
     containers: [
         containerTemplate( name: 'dotnetbuild', image: 'microsoft/dotnet:2.1-sdk', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'az', image: 'microsoft/azure-cli:2.0.41', ttyEnabled: true, command: 'cat'),
     ],
     envVars: [
@@ -43,7 +42,7 @@ podTemplate(
     label: 'apiuser',
     containers: [
         containerTemplate( name: 'nodealpine', image: 'node:8-alpine', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'az', image: 'microsoft/azure-cli:2.0.41', ttyEnabled: true, command: 'cat'),
     ],
     envVars: [
         envVar(key: 'TEMPUSER', value: 'changemelater')
@@ -81,8 +80,8 @@ podTemplate(
 podTemplate(
     label: 'apitrips',
     containers: [
-        containerTemplate(name: 'gobuildci', image: 'golang:1.10.1', ttyEnabled: true, command: 'cat'),
-        containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'gobuildci', image: 'golang:1.10.3', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'az', image: 'microsoft/azure-cli:2.0.41', ttyEnabled: true, command: 'cat'),
     ],
     envVars: [
         envVar(key: 'TEMPTRIPS', value: 'changemelater')
