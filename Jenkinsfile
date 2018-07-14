@@ -3,6 +3,7 @@ podTemplate(
     containers: [
         containerTemplate( name: 'dotnetbuild', image: 'microsoft/dotnet:2.1-sdk', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker', image: 'docker:18-dind', ttyEnabled: true, command: 'cat'),
+        containerTemplate(name: 'az', image: 'microsoft/azure-cli:2.0.41', ttyEnabled: true, command: 'cat'),
     ],
     envVars: [
         envVar(key: 'TEMPPOI', value: 'changemelater')
@@ -21,11 +22,17 @@ podTemplate(
                     """
                 }
             }
-            container('docker'){
+            container('az'){
                 stage('Docker Build POI API') {
                     sh """
-                    docker build ./apis/poi/web -t poi
+                    #docker build ./apis/poi/web -t poi
                     """
+                    withCredentials([azureServicePrincipal('otaprdspn')]) {
+                    sh """
+                    az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
+                    az acr build --registry devopsoh336sub3acr -f ./Dockerfile 
+                    """
+                    }
                 }
             }
         }
