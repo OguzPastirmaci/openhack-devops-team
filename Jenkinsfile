@@ -93,7 +93,8 @@ podTemplate(
                     ls
                     curl https://glide.sh/get | sh
                     glide install
-                    go test ./test
+                    go build
+                    #go test ./test
                     """
                 }
             }
