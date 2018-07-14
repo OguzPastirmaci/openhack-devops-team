@@ -30,7 +30,7 @@ podTemplate(
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apiuser .
+                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apiuser ./apis/poi/web
                     """
                     }
                 }
@@ -69,7 +69,7 @@ podTemplate(
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apiuser .
+                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apiuser ./apis/userprofile
                     """
                     }                    
                 }
@@ -112,7 +112,7 @@ podTemplate(
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
-                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apitrips .
+                    az acr build --registry devopsoh336sub3acr -f Dockerfile --image apitrips ./apis/trips
                     """
                     }                    
                 }
