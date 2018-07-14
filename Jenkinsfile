@@ -23,9 +23,6 @@ podTemplate(
             }
             container('az'){
                 stage('Docker Build POI API') {
-                    sh """
-                    #docker build ./apis/poi/web -t poi
-                    """
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
@@ -56,15 +53,12 @@ podTemplate(
                     sh """
                     cd apis/userprofile
                     npm install
-                    #npm run test
+                    npm run test
                     """
                 }
             }
             container('az'){
                 stage('Docker Build User API') {
-                    sh """
-                    docker build ./apis/userprofile -t user
-                    """
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
@@ -105,9 +99,6 @@ podTemplate(
             }
             container('az'){
                 stage('Docker Build Trips API') {
-                    sh """
-                    #docker build ./apis/trips -t trips
-                    """
                     withCredentials([azureServicePrincipal('otaprdspn')]) {
                     sh """
                     az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID
